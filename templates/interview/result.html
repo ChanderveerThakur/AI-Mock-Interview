@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Result — Mock Interview AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: #0c1222;
+            color: #d1fae5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 25% 50%, rgba(20, 184, 166, 0.12) 0%, transparent 50%),
+                        radial-gradient(circle at 75% 25%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .result-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 540px;
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 24px;
+            padding: 44px 36px;
+            backdrop-filter: blur(40px);
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .icon-badge {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #f0fdfa;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: rgba(204, 251, 241, 0.5);
+            margin-bottom: 28px;
+        }
+
+        .score-circle {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 28px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.15), rgba(6, 182, 212, 0.1));
+            border: 3px solid #14b8a6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 25px rgba(20, 184, 166, 0.2);
+        }
+
+        .score-circle .number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #5eead4;
+        }
+
+        .score-circle .label {
+            font-size: 11px;
+            color: rgba(204, 251, 241, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 16px 10px;
+        }
+
+        .stat-box .val {
+            font-size: 20px;
+            font-weight: 700;
+            color: #f0fdfa;
+            margin-bottom: 4px;
+        }
+
+        .stat-box .desc {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-report {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #0d9488, #0891b2);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-bottom: 12px;
+        }
+
+        .btn-report:hover {
+            background: linear-gradient(135deg, #0f766e, #0e7490);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 25px rgba(20, 184, 166, 0.3);
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            font-size: 14px;
+            color: #5eead4;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .btn-secondary:hover {
+            color: #99f6e4;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="result-container">
+        <div class="result-card">
+
+            <div class="icon-badge">🏆</div>
+            <h1>Assessment Complete</h1>
+            <p class="subtitle">{{ interview.skills }} &bull; {{ interview.difficulty|title }}</p>
+
+            <div class="score-circle">
+                <span class="number">{{ mcq_percentage|floatformat:0 }}%</span>
+                <span class="label">MCQ Accuracy</span>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="val">{{ total_questions }}</div>
+                    <div class="desc">Total</div>
+                </div>
+                <div class="stat-box">
+                    <div class="val" style="color: #4ade80;">{{ correct_answers }}</div>
+                    <div class="desc">Correct</div>
+                </div>
+                <div class="stat-box">
+                    <div class="val" style="color: #f87171;">{{ incorrect_answers }}</div>
+                    <div class="desc">Incorrect</div>
+                </div>
+            </div>
+
+            <a href="{% url 'interview_report' interview.id %}" class="btn-report">
+                View AI Evaluation & Feedback ➔
+            </a>
+
+            <div>
+                <a href="{% url 'interview' %}" class="btn-secondary">Start Another Interview</a>
+                &bull;
+                <a href="{% url 'dashboard' %}" class="btn-secondary">Go to Dashboard</a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

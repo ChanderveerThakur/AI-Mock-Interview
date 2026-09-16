@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Report — Mock Interview AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: #0c1222;
+            color: #d1fae5;
+            padding: 40px 20px;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 25% 50%, rgba(20, 184, 166, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 75% 25%, rgba(6, 182, 212, 0.08) 0%, transparent 50%);
+            z-index: 0;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 840px;
+            margin: 0 auto;
+        }
+
+        .report-header {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 28px;
+            backdrop-filter: blur(20px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .report-header h1 {
+            font-size: 24px;
+            color: #f0fdfa;
+            margin-bottom: 6px;
+        }
+
+        .report-header p {
+            font-size: 14px;
+            color: rgba(204, 251, 241, 0.6);
+        }
+
+        .btn-action {
+            padding: 10px 20px;
+            background: rgba(20, 184, 166, 0.12);
+            color: #5eead4;
+            border: 1px solid rgba(20, 184, 166, 0.3);
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn-action:hover {
+            background: rgba(20, 184, 166, 0.25);
+            border-color: rgba(20, 184, 166, 0.5);
+        }
+
+        .answer-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 18px;
+            padding: 26px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .q-number {
+            font-size: 12px;
+            font-weight: 600;
+            color: #2dd4bf;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .badge-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-correct {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .badge-incorrect {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .badge-score {
+            background: rgba(6, 182, 212, 0.15);
+            color: #67e8f9;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+
+        .q-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #f0fdfa;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .ans-block {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #ccfbf1;
+        }
+
+        .ans-block .label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 6px;
+        }
+
+        .feedback-box {
+            background: rgba(20, 184, 166, 0.06);
+            border: 1px solid rgba(20, 184, 166, 0.2);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 14px;
+        }
+
+        .feedback-box .label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #5eead4;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .feedback-box p {
+            font-size: 14px;
+            color: #f0fdfa;
+            line-height: 1.6;
+        }
+
+        .footer-nav {
+            text-align: center;
+            margin-top: 32px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="report-header">
+            <div>
+                <h1>Detailed AI Interview Report</h1>
+                <p>Skills Tested: {{ interview.skills }} &bull; Difficulty: {{ interview.difficulty|title }}</p>
+            </div>
+            <div>
+                <a href="{% url 'interview' %}" class="btn-action">✚ New Interview</a>
+                <a href="{% url 'dashboard' %}" class="btn-action">📊 Dashboard</a>
+            </div>
+        </div>
+
+        {% for answer in answers %}
+            <div class="answer-card">
+                <div class="card-top">
+                    <div class="q-number">Question {{ answer.question.question_number }} &bull; {{ answer.question.get_question_type_display }}</div>
+
+                    {% if answer.question.question_type == 'mcq' %}
+                        {% if answer.is_correct %}
+                            <span class="badge-status badge-correct">✓ Correct (1/1)</span>
+                        {% else %}
+                            <span class="badge-status badge-incorrect">✗ Incorrect (0/1)</span>
+                        {% endif %}
+                    {% else %}
+                        {% if answer.score is not None %}
+                            <span class="badge-status badge-score">Score: {{ answer.score }}/10</span>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+                <div class="q-title">{{ answer.question.question_text }}</div>
+
+                <div class="ans-block">
+                    <div class="label">Your Submitted Answer:</div>
+                    <div>{{ answer.answer|default:"(No answer provided)" }}</div>
+                </div>
+
+                {% if answer.question.question_type == 'mcq' and not answer.is_correct %}
+                    <div class="ans-block" style="border-color: rgba(34, 197, 94, 0.2); background: rgba(34, 197, 94, 0.04);">
+                        <div class="label" style="color: #4ade80;">Correct Answer:</div>
+                        <div style="color: #86efac;">{{ answer.question.correct_answer }}</div>
+                    </div>
+                {% endif %}
+
+                {% if answer.question.question_type == 'text' %}
+                    {% if answer.question.expected_answer %}
+                        <div class="ans-block" style="border-color: rgba(6, 182, 212, 0.15); background: rgba(6, 182, 212, 0.03);">
+                            <div class="label" style="color: #67e8f9;">Expected Solution / Key Concepts:</div>
+                            <div>{{ answer.question.expected_answer }}</div>
+                        </div>
+                    {% endif %}
+
+                    {% if answer.feedback %}
+                        <div class="feedback-box">
+                            <div class="label">🤖 AI Evaluator Feedback:</div>
+                            <p>{{ answer.feedback }}</p>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <div class="footer-nav">
+            <a href="{% url 'interview' %}" class="btn-action">Start Another Interview</a>
+            &nbsp;&nbsp;
+            <a href="{% url 'dashboard' %}" class="btn-action">Return to Dashboard</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
