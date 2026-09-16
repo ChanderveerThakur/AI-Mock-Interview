@@ -156,12 +156,18 @@ def register_view(request):
         }
 
         # Send OTP
-        send_mail(
-            subject='Your Registration OTP',
-            message=f'Your OTP is {otp}. It is required to verify your email.',
-            from_email=os.getenv("EMAIL_HOST_USER"),
-            recipient_list=[email],
-        )
+        try:
+            send_mail(
+                subject='Your Registration OTP',
+                message=f'Your OTP is {otp}. It is required to verify your email.',
+                from_email=os.getenv("EMAIL_HOST_USER"),
+                recipient_list=[email],
+                fail_silently=False,
+            )
+        except Exception as e:
+            return render(request, 'register.html', {
+                'error': f'Failed to send OTP email. Please check your email address or SMTP configuration: {str(e)}'
+            })
 
         return redirect('verify_otp')
 
