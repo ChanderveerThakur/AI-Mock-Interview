@@ -674,6 +674,170 @@
             font-size: 13px;
             margin-bottom: 18px;
         }
+
+        .btn-text-short {
+            display: none;
+        }
+
+        /* ================= RESPONSIVE DESIGN (MOBILE & TABLET) ================= */
+        @media (max-width: 992px) {
+            .navbar {
+                padding: 14px 20px;
+            }
+
+            .dashboard-container {
+                padding: 24px 18px;
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .right-panel {
+                height: auto;
+                max-height: 560px;
+                position: static;
+                top: auto;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .navbar {
+                padding: 12px 14px;
+                gap: 8px;
+            }
+
+            .brand-title {
+                font-size: 15px;
+            }
+
+            .brand-icon {
+                width: 34px;
+                height: 34px;
+                font-size: 17px;
+                border-radius: 10px;
+            }
+
+            .nav-actions {
+                gap: 8px;
+            }
+
+            .user-pill {
+                padding: 5px 8px;
+            }
+
+            .user-pill span {
+                display: none;
+            }
+
+            .btn-text-full {
+                display: none;
+            }
+
+            .btn-text-short {
+                display: inline;
+            }
+
+            .btn-new-interview {
+                padding: 8px 12px;
+                font-size: 12.5px;
+                border-radius: 10px;
+            }
+
+            .btn-logout {
+                padding: 7px 10px;
+                font-size: 12px;
+                border-radius: 8px;
+            }
+
+            .dashboard-container {
+                padding: 16px 12px;
+                gap: 18px;
+            }
+
+            .hero-banner {
+                padding: 22px 16px;
+            }
+
+            .hero-text h1 {
+                font-size: 20px;
+            }
+
+            .hero-text p {
+                font-size: 13px;
+                margin-bottom: 16px;
+            }
+
+            .hero-banner .btn-new-interview {
+                width: 100%;
+                justify-content: center;
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .stat-card {
+                padding: 16px 14px;
+                border-radius: 14px;
+            }
+
+            .stat-icon {
+                font-size: 18px;
+                margin-bottom: 8px;
+            }
+
+            .stat-value {
+                font-size: 22px;
+            }
+
+            .stat-label {
+                font-size: 10px;
+            }
+
+            .analytics-card, .skills-section, .right-panel {
+                padding: 20px 16px;
+                border-radius: 18px;
+            }
+
+            .chart-bars {
+                gap: 6px;
+                height: 120px;
+            }
+
+            .bar-fill {
+                max-width: 30px;
+            }
+
+            .bar-fill::after {
+                font-size: 10px;
+                top: -20px;
+            }
+
+            .bar-label {
+                font-size: 9.5px;
+                max-width: 44px;
+            }
+
+            .card-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .card-actions {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            .card-actions .btn-card {
+                flex: 1;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
@@ -692,7 +856,8 @@
             </div>
 
             <a href="{% url 'interview' %}" class="btn-new-interview">
-                ✚ New Interview
+                <span class="btn-text-full">✚ New Interview</span>
+                <span class="btn-text-short">✚ New</span>
             </a>
 
             <form method="POST" action="{% url 'logout' %}" style="display:inline;">

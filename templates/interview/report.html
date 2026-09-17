@@ -185,6 +185,84 @@
             text-align: center;
             margin-top: 32px;
         }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 20px 14px;
+            }
+
+            .report-header {
+                padding: 20px 16px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 14px;
+                border-radius: 16px;
+            }
+
+            .report-header h1 {
+                font-size: 20px;
+            }
+
+            .report-header > div:last-child {
+                display: flex;
+                gap: 8px;
+                width: 100%;
+            }
+
+            .report-header .btn-action {
+                flex: 1;
+                text-align: center;
+                padding: 9px 10px;
+                font-size: 12px;
+            }
+
+            .answer-card {
+                padding: 18px 14px;
+                border-radius: 14px;
+                margin-bottom: 16px;
+            }
+
+            .card-top {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .q-title {
+                font-size: 14.5px;
+                margin-bottom: 14px;
+                word-break: break-word;
+            }
+
+            .ans-block {
+                padding: 12px 14px;
+                font-size: 13px;
+                word-break: break-word;
+            }
+
+            .feedback-box {
+                padding: 14px;
+            }
+
+            .feedback-box p {
+                font-size: 13px;
+                word-break: break-word;
+            }
+
+            .footer-nav {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                align-items: stretch;
+            }
+
+            .footer-nav .btn-action {
+                display: block;
+                width: 100%;
+                text-align: center;
+                padding: 12px;
+                font-size: 13.5px;
+            }
+        }
     </style>
 </head>
 <body>

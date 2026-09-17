@@ -19,7 +19,8 @@
             align-items: center;
             justify-content: center;
             background: #0c1222;
-            overflow: hidden;
+            overflow-x: hidden;
+            padding: 24px 14px;
         }
 
         body::before {
@@ -191,6 +192,26 @@
 
         .auth-footer a:hover {
             color: #99f6e4;
+        }
+
+        @media (max-width: 480px) {
+            .auth-container {
+                padding: 0;
+            }
+
+            .auth-card {
+                padding: 32px 20px;
+                border-radius: 20px;
+            }
+
+            .auth-card h1 {
+                font-size: 22px;
+            }
+
+            .auth-card .subtitle {
+                font-size: 13px;
+                margin-bottom: 26px;
+            }
         }
     </style>
 </head>
